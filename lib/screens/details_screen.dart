@@ -1,40 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/models/models.dart';
 import 'package:peliculas/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
-
+  
   @override
   Widget build(BuildContext context) {
-    
-     final String movie = ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-movie';
 
-     return Scaffold(
+    // TODO: Cambiar luego por una instancia de movie
+    final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie;
+
+    return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(),
+          _CustomAppBar( movie ),
           SliverList(
             delegate: SliverChildListDelegate([
-
-              _PosterAndTitle(),
-              _Overview(),
-              _Overview(),
-              _Overview(),
-              CastingCards()
-              
-            ]
-
-            )
-
-            )
-
+              _PosterAndTitle( movie ),
+              _Overview( movie ),
+              _Overview( movie ),
+              _Overview( movie ),
+              CastingCards( movie.id )
+            ])
+          )
         ],
       )
     );
   }
 }
 
+
 class _CustomAppBar extends StatelessWidget {
 
+  final Movie movie;
+
+  const _CustomAppBar( this.movie );
 
   @override
   Widget build(BuildContext context) {
@@ -44,82 +44,111 @@ class _CustomAppBar extends StatelessWidget {
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-      centerTitle: true,
-      titlePadding: const EdgeInsets.all(0),
-      title: Container(
-        width: double.infinity,
-        alignment: Alignment.bottomCenter,
-        color: Colors.black12,
-        padding: EdgeInsets.only(bottom: 10),
-        child: const Text('Movie.title', style: TextStyle(fontSize: 16),),
-      ),
-      background: const FadeInImage(
-        placeholder: AssetImage('assets/loading.gif'), 
-        image: NetworkImage( 'https://via.placeholder.com/300x400'),
-        fit: BoxFit.cover,
+        centerTitle: true,
+        titlePadding: EdgeInsets.all(0),
+        title: Container(
+          width: double.infinity,
+          alignment: Alignment.bottomCenter,
+          padding: EdgeInsets.only( bottom: 10, left: 10, right: 10),
+          color: Colors.black12,
+          child: Text(
+              movie.title,
+              style: TextStyle( fontSize: 16 ),
+              textAlign: TextAlign.center,
+            ),
         ),
-),
 
+        background: FadeInImage(
+          placeholder: AssetImage('assets/loading.gif'), 
+          image: NetworkImage( movie.fullBackDropPath ),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }
 
-class _PosterAndTitle extends StatelessWidget {
 
+class _PosterAndTitle extends StatelessWidget {
+  
+  final Movie movie;
  
+
+  const _PosterAndTitle( this.movie );
+
+
   @override
   Widget build(BuildContext context) {
+    
+  
+    
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final size = MediaQuery.of(context).size;
+
+
     return Container(
-        margin: const EdgeInsets.only(top: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Row(
-          children: [
-            ClipRRect(
+      margin: EdgeInsets.only( top: 20 ),
+      padding: EdgeInsets.symmetric( horizontal: 20 ),
+      child: Row(
+        children: [
+
+          
+          Hero(
+            tag: movie.heroId!,
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: const FadeInImage(
+              child: FadeInImage(
                 placeholder: AssetImage('assets/no-image.jpg'), 
-                image: NetworkImage( 'https://via.placeholder.com/200x300'),
+                image: NetworkImage( movie.fullPosterImg ),
                 height: 150,
-                ),
+              ),
             ),
-            SizedBox(width: 20),
-            Column(
+          ),
+
+          SizedBox( width: 20 ),
+
+          ConstrainedBox(
+            constraints: BoxConstraints( maxWidth: size.width - 190 ),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('movie.title', style: textTheme.headline5, overflow: TextOverflow.ellipsis, maxLines: 2,),
-                Text('movie.originaltitle', style: textTheme.subtitle1, overflow: TextOverflow.ellipsis,),
+                
+                Text( movie.title, style: textTheme.headline5, overflow: TextOverflow.ellipsis, maxLines: 2 ),
+                
+                Text( movie.originalTitle, style: textTheme.subtitle1, overflow: TextOverflow.ellipsis, maxLines: 2),
 
                 Row(
                   children: [
-                    Icon(Icons.star_outline, size: 15, color: Colors.grey,),
-                    SizedBox(width: 5,),
-                    Text('movie.voteaverage', style: textTheme.caption,)
+                    Icon( Icons.star_outline, size: 15, color: Colors.grey ),
+                    SizedBox( width: 5 ),
+                    Text( '${movie.voteAverage}', style: textTheme.caption )
                   ],
                 )
-
-
               ],
-            )
-          ],
-        ),
-);
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
 
+
 class _Overview extends StatelessWidget {
+
+  final Movie movie;
+
+  const _Overview(this.movie);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-      child: Text('Fugiat ut adipisicing aliqua fugiat ea deserunt sunt Lorem consequat proident elit eiusmod. Officia consequat ut qui commodo velit. Reprehenderit aliquip occaecat labore pariatur consectetur. Id nostrud ipsum ut officia sint excepteur sint qui voluptate. Voluptate aliqua excepteur occaecat ullamco aliquip proident et reprehenderit duis reprehenderit nostrud pariatur. Tempor irure laboris enim in nostrud eiusmod minim elit.'
-      , textAlign: TextAlign.justify,
-      style: Theme.of(context).textTheme.subtitle1,),
-
-
-
+      padding: EdgeInsets.symmetric( horizontal: 30, vertical: 10),
+      child: Text(
+        movie.overview,
+        textAlign: TextAlign.justify,
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
     );
   }
 }

@@ -3,11 +3,56 @@ import 'package:flutter/rendering.dart';
 
 import '../models/models.dart';
 
-class MovieSlider extends StatelessWidget {
+class MovieSlider extends StatefulWidget {
 
 final List<Movie> movies;
+final String? title;
+final Function onNextPage;
 
-  const MovieSlider({Key? key, required this.movies}) : super(key: key);
+  const MovieSlider({Key? key, required this.movies,
+                               required this.onNextPage,
+                               this.title
+                               }) : super(key: key);
+
+  @override
+  State<MovieSlider> createState() => _MovieSliderState();
+}
+
+class _MovieSliderState extends State<MovieSlider> {
+
+final ScrollController scrollController = new ScrollController();
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  scrollController.addListener(() {
+    
+    if(scrollController.position.pixels >= scrollController.position.maxScrollExtent - 500){
+      widget.onNextPage();
+
+    }
+
+  });
+
+
+    
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+
+
+
+
+
+    super.dispose();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +64,20 @@ final List<Movie> movies;
 
         children: [
 
-          //depende del titulo
-         const Padding
-         (padding: EdgeInsets.symmetric(horizontal: 20),
-         child: Text('Populares', style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-         ),
+         if ( this.widget.title != null )
+            Padding(
+              padding: EdgeInsets.symmetric( horizontal: 20 ),
+              child: Text( this.widget.title!, style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold ),),
+            ),
+
+          SizedBox( height: 5 ),
         
         Expanded(
           child: ListView.builder(
+            controller: scrollController,
             scrollDirection: Axis.horizontal,
-            itemCount: movies.length,
-            itemBuilder: (_, int index) => _MoviePoster(movies[index])
+            itemCount: widget.movies.length,
+            itemBuilder: (_, int index) => _MoviePoster(widget.movies[index], '${widget.title}-$index-${widget.movies[index].id}')
             ),
         )
         ],
@@ -43,47 +91,51 @@ final List<Movie> movies;
 class _MoviePoster extends StatelessWidget {
 
  final Movie movie;
+ final String heroId;
 
- const _MoviePoster(this.movie);
+ const _MoviePoster(this.movie, this.heroId);
 
 
   @override
   Widget build(BuildContext context) {
     
+    movie.heroId = heroId;
+
     return Container(
-                
-                width: 130,
-                height: 190,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  children: [
-                   
-                    GestureDetector(
+      width: 130,
+      height: 190,
+      margin: EdgeInsets.symmetric( horizontal: 10 ),
+      child: Column(
+        children: [
 
-                           onTap: () => Navigator.pushNamed(context, 'details', arguments: 'movie-instance'),
-
-                      child: ClipRRect(
-                        
-                        borderRadius: BorderRadius.circular(20),
-                        child:  FadeInImage(
-                          placeholder: AssetImage('assets/no-image.jpg'), 
-                          image: NetworkImage(movie.fullPosterImg),
-                          width: 120,
-                          height: 190,
-                          fit: BoxFit.cover,
-                          ),
-                      ),
-                    ),
-
-                   const  SizedBox(height: 5,),
-                  
-                 Text(
-                  'movie.title',
-              
-                     overflow: TextOverflow.ellipsis,
-                     textAlign: TextAlign.center,)
-                  ],
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, 'details', arguments: movie ),
+            child: Hero(
+              tag: movie.heroId!,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/no-image.jpg'), 
+                  image: NetworkImage( movie.fullPosterImg ),
+                  width: 130,
+                  height: 190,
+                  fit: BoxFit.cover,
                 ),
-              );
+              ),
+            ),
+          ),
+
+          SizedBox( height: 5 ),
+
+          Text( 
+            movie.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          )
+
+        ],
+      ),
+    );
   }
 }
