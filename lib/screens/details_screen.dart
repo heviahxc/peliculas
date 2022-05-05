@@ -20,6 +20,7 @@ class DetailsScreen extends StatelessWidget {
               _PosterAndTitle( movie ),
               _Overview( movie ),
               CastingCards( movie.id ),
+              SizedBox(height: 5),
              const Text('Peliculas Similares', style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold ), textAlign: TextAlign.center,),
              SizedBox(height: 5),
               SimilarMoviesCard(movie.id)
