@@ -21,6 +21,8 @@ class MoviesProvider extends ChangeNotifier{
 
  Map<int, List<Cast>> moviesCast = {};
 
+ Map<int, List<Movie>> moviesSimilar = {};
+
   int _popularPage = 0;
 
  final debouncer = Debouncer(
@@ -76,6 +78,20 @@ class MoviesProvider extends ChangeNotifier{
   notifyListeners();
 
   }
+
+ Future<List<Movie>> getSimilarMovies(int movieId) async {
+
+    if(moviesSimilar.containsKey(movieId)) return moviesSimilar[movieId]!;
+
+    final jsonData = await _getJsonData('3/movie/$movieId/similar');
+    final similarResponse = SimilarMoviesResponse.fromJson(jsonData);
+
+    moviesSimilar[movieId] = similarResponse.results;
+
+    return similarResponse.results; 
+
+  }
+
 
   Future<List<Cast>> getMovieCast(int movieId) async {
 

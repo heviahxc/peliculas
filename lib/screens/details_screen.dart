@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/models/models.dart';
+import 'package:peliculas/widgets/similar_movies_card.dart';
 import 'package:peliculas/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -18,13 +19,20 @@ class DetailsScreen extends StatelessWidget {
             delegate: SliverChildListDelegate([
               _PosterAndTitle( movie ),
               _Overview( movie ),
-              _Overview( movie ),
-              _Overview( movie ),
-              CastingCards( movie.id )
-            ])
-          )
+              CastingCards( movie.id ),
+             const Text('Peliculas Similares', style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold ), textAlign: TextAlign.center,),
+             SizedBox(height: 5),
+              SimilarMoviesCard(movie.id)
+              
+
+            ]),
+            
+          ),
+          
         ],
+        
       )
+      
     );
   }
 }
