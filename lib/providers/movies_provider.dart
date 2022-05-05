@@ -19,6 +19,7 @@ class MoviesProvider extends ChangeNotifier{
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
   List<Movie> topRatedMovies = [];
+  List<Movie> upComingMovies = [];
 
  Map<int, List<Cast>> moviesCast = {};
 
@@ -26,6 +27,7 @@ class MoviesProvider extends ChangeNotifier{
 
   int _popularPage = 0;
   int _topRatedPage = 0;
+  int _upComingPage = 0;
 
  final debouncer = Debouncer(
    duration: Duration(milliseconds: 500), 
@@ -40,6 +42,7 @@ class MoviesProvider extends ChangeNotifier{
     getOnDisplayMovies();
     getPopularMovies();
     getTopRatedMovies();
+    getUpComingMovies();
 
     
 
@@ -89,6 +92,18 @@ class MoviesProvider extends ChangeNotifier{
   final topResponse = PopularResponse.fromJson(jsonData);
 
   topRatedMovies = [...topRatedMovies, ...topResponse.results];
+
+  notifyListeners();
+
+  }
+
+   getUpComingMovies() async{
+    
+  _upComingPage++;
+  final jsonData = await _getJsonData('3/movie/upcoming', _upComingPage);
+  final upComingResponse = UpcomingResponse.fromJson(jsonData);
+
+  upComingMovies = [...upComingMovies, ...upComingResponse.results];
 
   notifyListeners();
 
