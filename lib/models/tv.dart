@@ -5,7 +5,6 @@ import 'dart:convert';
 class Tv {
     Tv({
                 this.backdropPath,
-      required  this.firstAirDate,
       required  this.genreIds,
       required  this.id,
       required  this.name,
@@ -20,7 +19,6 @@ class Tv {
     });
 
     String? backdropPath;
-    DateTime firstAirDate;
     List<int> genreIds;
     int id;
     String name;
@@ -55,7 +53,6 @@ class Tv {
     factory Tv.fromJson(String str) => Tv.fromMap(json.decode(str));
     factory Tv.fromMap(Map<String, dynamic> json) => Tv(
         backdropPath: json["backdrop_path"],
-        firstAirDate: DateTime.parse(json["first_air_date"]),
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
         name: json["name"],
