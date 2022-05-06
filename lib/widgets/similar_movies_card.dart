@@ -56,7 +56,7 @@ class _SimilarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    movie.heroId = '${movie.adult}-${movie.id}-${movie.title}-${movie.originalTitle}';
+    movie.heroId = 'similar-card-${movie.id}';
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
         width: 100,

@@ -18,6 +18,7 @@ class Movie {
       required  this.video,
       required  this.voteAverage,
       required  this.voteCount,
+      
     });
 
     bool adult;

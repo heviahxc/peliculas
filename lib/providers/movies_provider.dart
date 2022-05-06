@@ -7,6 +7,7 @@ import 'dart:convert';
 
 import 'package:peliculas/models/models.dart';
 import 'package:peliculas/models/search_response.dart';
+import 'package:peliculas/models/tv_response.dart';
 import 'package:peliculas/search/search_delegate.dart';      
 
 
@@ -21,6 +22,8 @@ class MoviesProvider extends ChangeNotifier{
   List<Movie> topRatedMovies = [];
   List<Movie> upComingMovies = [];
 
+  List<Tv> tvPopular = [];
+
  Map<int, List<Cast>> moviesCast = {};
 
  Map<int, List<Movie>> moviesSimilar = {};
@@ -28,6 +31,8 @@ class MoviesProvider extends ChangeNotifier{
   int _popularPage = 0;
   int _topRatedPage = 0;
   int _upComingPage = 0;
+
+  int _tvPage = 0;
 
  final debouncer = Debouncer(
    duration: Duration(milliseconds: 500), 
@@ -43,6 +48,7 @@ class MoviesProvider extends ChangeNotifier{
     getPopularMovies();
     getTopRatedMovies();
     getUpComingMovies();
+    getPopularTv();
 
     
 
@@ -62,6 +68,21 @@ class MoviesProvider extends ChangeNotifier{
   final response = await http.get(url);
   return response.body;
   }
+
+getPopularTv() async{
+    
+  _tvPage++;
+  final jsonData = await _getJsonData('3/tv/popular', _tvPage);
+  final tvPopularResponse = TvResponse.fromJson(jsonData);
+
+  tvPopular = [...tvPopular, ...tvPopularResponse.results];
+
+  notifyListeners();
+
+  }
+
+
+
 
   getOnDisplayMovies() async{
     

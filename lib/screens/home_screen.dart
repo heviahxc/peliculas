@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/providers/movies_provider.dart';
 import 'package:peliculas/search/search_delegate.dart';
+import 'package:peliculas/widgets/tv_slider.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/widgets.dart';
@@ -35,7 +36,9 @@ class HomeScreen extends StatelessWidget {
          MovieSlider(movies: moviesProvider.topRatedMovies, title: 'Mejores Calificadas', 
          onNextPage: () => moviesProvider.getTopRatedMovies(),),
          MovieSlider(movies: moviesProvider.upComingMovies, title: 'Proximos Estrenos', 
-         onNextPage: () => moviesProvider.getUpComingMovies(),)
+         onNextPage: () => moviesProvider.getUpComingMovies(),),
+         TvSlider(tv: moviesProvider.tvPopular, title: 'Series de Tv', 
+         onNextPage: () => moviesProvider.getPopularTv(),)
 
 
         ],
