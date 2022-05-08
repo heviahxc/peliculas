@@ -64,13 +64,13 @@ final ScrollController scrollController = new ScrollController();
 
         children: [
 
-         if ( this.widget.title != null )
+         if ( widget.title != null )
             Padding(
-              padding: EdgeInsets.symmetric( horizontal: 20 ),
-              child: Text( this.widget.title!, style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold ),),
+              padding: const EdgeInsets.symmetric( horizontal: 20 ),
+              child: Text( widget.title!, style: const TextStyle( fontSize: 20, fontWeight: FontWeight.bold ),),
             ),
 
-          SizedBox( height: 5 ),
+          const SizedBox( height: 5 ),
         
         Expanded(
           child: ListView.builder(
@@ -104,7 +104,7 @@ class _MoviePoster extends StatelessWidget {
     return Container(
       width: 130,
       height: 190,
-      margin: EdgeInsets.symmetric( horizontal: 10 ),
+      margin: const EdgeInsets.symmetric( horizontal: 10 ),
       child: Column(
         children: [
 
@@ -115,7 +115,7 @@ class _MoviePoster extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: FadeInImage(
-                  placeholder: AssetImage('assets/no-image.jpg'), 
+                  placeholder: const AssetImage('assets/no-image.jpg'), 
                   image: NetworkImage( movie.fullPosterImg ),
                   width: 130,
                   height: 190,
@@ -125,7 +125,7 @@ class _MoviePoster extends StatelessWidget {
             ),
           ),
 
-          SizedBox( height: 5 ),
+          const SizedBox( height: 5 ),
 
           Text( 
             movie.title,

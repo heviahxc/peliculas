@@ -23,9 +23,9 @@ class SimilarMoviesCard extends StatelessWidget {
 
         if(!snapshot.hasData){
           return Container(
-            constraints: BoxConstraints(maxWidth: 150),
+            constraints: const BoxConstraints(maxWidth: 150),
             height: 180,
-            child: CupertinoActivityIndicator(),
+            child: const CupertinoActivityIndicator(),
           );
         }
 
@@ -58,7 +58,7 @@ class _SimilarCard extends StatelessWidget {
 
     movie.heroId = 'similar-card-${movie.id}';
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
         width: 100,
         height: 100,
 
@@ -73,7 +73,7 @@ class _SimilarCard extends StatelessWidget {
                   
                   borderRadius: BorderRadius.circular(20),
                   child: FadeInImage(
-                   placeholder: AssetImage('assets/no-image.jpg'), 
+                   placeholder: const AssetImage('assets/no-image.jpg'), 
                     image: NetworkImage( movie.fullPosterImg),
                     height: 140,
                     width:100,
@@ -82,7 +82,7 @@ class _SimilarCard extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
 
              Text(
               movie.title,

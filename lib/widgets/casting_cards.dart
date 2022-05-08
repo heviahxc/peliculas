@@ -23,9 +23,9 @@ class CastingCards extends StatelessWidget {
 
         if(!snapshot.hasData){
           return Container(
-            constraints: BoxConstraints(maxWidth: 150),
+            constraints: const BoxConstraints(maxWidth: 150),
             height: 180,
-            child: CupertinoActivityIndicator(),
+            child: const CupertinoActivityIndicator(),
           );
         }
 
@@ -58,7 +58,7 @@ class _CastCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
         width: 100,
         height: 100,
 
@@ -68,14 +68,14 @@ class _CastCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
-               placeholder: AssetImage('assets/no-image.jpg'), 
+               placeholder: const AssetImage('assets/no-image.jpg'), 
                 image: NetworkImage( actor.fullProfilePaht),
                 height: 140,
                 width:100,
                 fit: BoxFit.cover,
                  ),
             ),
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
 
              Text(
               actor.name,

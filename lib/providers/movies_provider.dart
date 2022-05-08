@@ -35,7 +35,7 @@ class MoviesProvider extends ChangeNotifier{
   int _tvPage = 0;
 
  final debouncer = Debouncer(
-   duration: Duration(milliseconds: 500), 
+   duration: const Duration(milliseconds: 500), 
    );
  final StreamController<List<Movie>> _suggestionStreamController = new StreamController.broadcast();
  Stream<List<Movie>> get suggestionStream => _suggestionStreamController.stream;
@@ -186,7 +186,7 @@ getPopularTv() async{
       debouncer.value = searchTerm;
      });
 
-     Future.delayed(Duration(milliseconds: 300)).then((_) => timer.cancel());
+     Future.delayed(const Duration(milliseconds: 300)).then((_) => timer.cancel());
   }
 
 }

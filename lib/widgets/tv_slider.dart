@@ -66,11 +66,11 @@ final ScrollController scrollController = new ScrollController();
 
          if ( this.widget.title != null )
             Padding(
-              padding: EdgeInsets.symmetric( horizontal: 20 ),
-              child: Text( this.widget.title!, style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold ),),
+              padding: const EdgeInsets.symmetric( horizontal: 20 ),
+              child: Text( widget.title!, style: const TextStyle( fontSize: 20, fontWeight: FontWeight.bold ),),
             ),
 
-          SizedBox( height: 5 ),
+          const SizedBox( height: 5 ),
         
         Expanded(
           child: ListView.builder(
@@ -104,7 +104,7 @@ class _TvPoster extends StatelessWidget {
     return Container(
       width: 130,
       height: 190,
-      margin: EdgeInsets.symmetric( horizontal: 10 ),
+      margin: const EdgeInsets.symmetric( horizontal: 10 ),
       child: Column(
         children: [
 
@@ -125,7 +125,7 @@ class _TvPoster extends StatelessWidget {
             ),
           ),
 
-          SizedBox( height: 5 ),
+          const SizedBox( height: 5 ),
 
           Text( 
             tv.name,
