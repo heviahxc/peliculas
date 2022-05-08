@@ -109,7 +109,7 @@ class _TvPoster extends StatelessWidget {
         children: [
 
           GestureDetector(
-           // onTap: () => Navigator.pushNamed(context, 'details', arguments: tv ),
+           onTap: () => Navigator.pushNamed(context, 'tv_details', arguments: tv ),
             child: Hero(
               tag: tv.heroId!,
               child: ClipRRect(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/providers/movies_provider.dart';
+import 'package:peliculas/screens/tv_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'screens/screens.dart';
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': ( _ ) => HomeScreen(),
         'details':( _ ) => DetailsScreen(), 
+        'tv_details':( _ ) => TvDetailsScreen(), 
 
       },
       theme: ThemeData.light().copyWith(

@@ -6,7 +6,7 @@ import 'dart:convert';
 
 class CreditsResponse {
     CreditsResponse({
-      required  this.id,
+      required this.id,
       required  this.cast,
       required  this.crew,
     });
